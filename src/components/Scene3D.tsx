@@ -4,7 +4,6 @@ import { OrbitControls } from '@react-three/drei';
 
 function Scene3D() {
 	return (
-
 		<Canvas
 			shadows
 			camera={{ position: [-1, 2, 5] }}
