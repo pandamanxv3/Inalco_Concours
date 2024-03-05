@@ -1,6 +1,6 @@
 import { Canvas } from '@react-three/fiber';
 import Experience from './Experience';
-import { OrbitControls } from '@react-three/drei';
+import { Box, OrbitControls } from '@react-three/drei';
 
 function Scene3D() {
 	return (
