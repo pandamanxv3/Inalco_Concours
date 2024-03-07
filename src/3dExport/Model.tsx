@@ -3,6 +3,8 @@ import React, { useEffect, useRef } from 'react'
 import { useGLTF, useAnimations } from '@react-three/drei'
 import { GLTF } from 'three-stdlib'
 import { useMeshState } from '../store/ContextBoard'
+import useInterfaceStore from '../store/store'
+import { StateName } from '../types/types'
 
 type GLTFResult = GLTF & {
 	nodes: {
@@ -48,20 +50,22 @@ export function Model(props: JSX.IntrinsicElements['group']) {
 		actions.slide!.play();
 		actions.fly!.play();
 	})
-	console.log(actions);
+
+	const { state } = useInterfaceStore();
 	return (
 		<group ref={group} {...props} dispose={null}>
 			<group name="Scene">
-				<group position={[70, 20, 50]} scale={[1, 1, 1]}>
-					<mesh name="MaroccoScene" ref={DzEnv} geometry={nodes.MaroccoScene.geometry} material={materials.MainMaterial} position={[14.462, 4.538, 104.857]} rotation={[-Math.PI, 0, -Math.PI]} scale={[18.138, 2.034, 5.606]} />
-					<mesh name="ParisScene" ref={FrEnv} geometry={nodes.ParisScene.geometry} material={materials.MainMaterial} position={[52.472, -16.851, 110.713]} rotation={[-Math.PI / 2, 0, -Math.PI / 2]} scale={0.085} />
-					<mesh name="SeolScene" ref={KrEnv} geometry={nodes.SeolScene.geometry} material={materials.MainMaterial} position={[59.341, -37.629, 157.743]} rotation={[-2.531, -1.38, -2.676]} scale={8.039} />
+				<group position={[70, 30, 50]} scale={[1, 1, 1]}>
+					<mesh visible={state === "DZ"} name="MaroccoScene" ref={DzEnv} geometry={nodes.MaroccoScene.geometry} material={materials.MainMaterial} position={[14.462, 4.538, 104.857]} rotation={[-Math.PI, 0, -Math.PI]} scale={[18.138, 2.034, 5.606]} />
+					<mesh visible={state === "FR"} name="ParisScene" ref={FrEnv} geometry={nodes.ParisScene.geometry} material={materials.MainMaterial} position={[52.472, -16.851, 110.713]} rotation={[-Math.PI / 2, 0, -Math.PI / 2]} scale={0.085} />
+					<mesh visible={state === "KR"} name="SeolScene" ref={KrEnv} geometry={nodes.SeolScene.geometry} material={materials.MainMaterial} position={[59.341, -37.629, 157.743]} rotation={[-2.531, -1.38, -2.676]} scale={8.039} />
 				</group>
 				<group scale={[0.7, 0.7, 0.7]}>
 					<group name="MaroccoChar" position={[0, 0, 1.123]} rotation={[Math.PI / 2, 0, 0]} scale={7.404}>
 						<primitive object={nodes.mixamorigHips} />
 					</group>
 					<skinnedMesh
+						visible={state === "DZ"}
 						name="AminaMesh"
 						geometry={nodes.AminaMesh.geometry}
 						material={materials.MainMaterial}
@@ -74,6 +78,7 @@ export function Model(props: JSX.IntrinsicElements['group']) {
 						<primitive object={nodes.mixamorigHips_1} />
 					</group>
 					<skinnedMesh
+						visible={state === "KR"}
 						name="YunjinMesh"
 						geometry={nodes.YunjinMesh.geometry}
 						material={materials.MainMaterial}
@@ -86,6 +91,7 @@ export function Model(props: JSX.IntrinsicElements['group']) {
 						<primitive object={nodes.mixamorigHips_2} />
 					</group>
 					<skinnedMesh
+						visible={state === "FR"}
 						name="iloMesh"
 						geometry={nodes.iloMesh.geometry}
 						material={materials.MainMaterial}
@@ -99,6 +105,7 @@ export function Model(props: JSX.IntrinsicElements['group']) {
 						<primitive object={nodes._rootJoint} />
 					</group>
 					<skinnedMesh
+						visible={state === "FR"}
 						name="pumaMesh"
 						geometry={nodes.pumaMesh.geometry}
 						material={materials.MainMaterial}
@@ -108,6 +115,7 @@ export function Model(props: JSX.IntrinsicElements['group']) {
 						<primitive object={nodes.ROOT} />
 					</group>
 					<skinnedMesh
+						visible={state === "DZ"}
 						name="snakeMesh"
 						geometry={nodes.snakeMesh.geometry}
 						material={materials.MainMaterial}
@@ -117,6 +125,7 @@ export function Model(props: JSX.IntrinsicElements['group']) {
 						<primitive object={nodes.Bone} />
 					</group>
 					<skinnedMesh
+						visible={state === "KR"} 
 						name="birdMesh"
 						geometry={nodes.birdMesh.geometry}
 						material={materials.MainMaterial}
