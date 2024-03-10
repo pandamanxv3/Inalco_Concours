@@ -1,17 +1,22 @@
 import { createContext, useContext, useRef } from "react";
 import { useState } from 'react';
-import { Group, Mesh } from "three";
+import { Group, Mesh, PerspectiveCamera } from "three";
 
-// A MODIFIER
-
-
-//Mesh Refs
 
 type MeshRefsType = {
 	KrEnv: React.RefObject<Mesh>;
 	DzEnv: React.RefObject<Mesh>;
 	FrEnv: React.RefObject<Mesh>;
-	// ajoutez d'autres refs ici
+	Env: React.RefObject<Group>;
+	
+	KrChar: React.RefObject<Group>;
+	DzChar: React.RefObject<Group>;
+	FrChar: React.RefObject<Group>;
+
+	KrAnimal: React.RefObject<Group>;
+	DzAnimal: React.RefObject<Group>;
+	FrAnimal: React.RefObject<Group>;
+	cameraRef: React.RefObject<PerspectiveCamera>;
 };
 
 type MeshContextType = {
@@ -28,11 +33,32 @@ export const MeshProvider = ({ children }: MeshProviderProps) => {
 	const KrEnvRef = useRef<Mesh>(null);
 	const DzEnvRef = useRef<Mesh>(null);
 	const FrEnvRef = useRef<Mesh>(null);
+	const EnvRef = useRef<Group>(null);
+
+	const KrCharRef = useRef<Group>(null);
+	const DzCharRef = useRef<Group>(null);
+	const FrCharRef = useRef<Group>(null);
+
+	const KrAnimalRef = useRef<Group>(null);
+	const DzAnimalRef = useRef<Group>(null);
+	const FrAnimalRef = useRef<Group>(null);
+
+	const cameraRef = useRef<PerspectiveCamera>(null);
 
 	const [meshRefs, setMeshRefs] = useState<MeshRefsType>({
+		Env: EnvRef,
 		KrEnv: KrEnvRef,
 		DzEnv: DzEnvRef,
 		FrEnv: FrEnvRef,
+
+		KrChar: KrCharRef,
+		DzChar: DzCharRef,
+		FrChar: FrCharRef,
+
+		KrAnimal: KrAnimalRef,
+		DzAnimal: DzAnimalRef,
+		FrAnimal: FrAnimalRef,
+		cameraRef: cameraRef,
 	});
 
 	return (

@@ -6,6 +6,7 @@ export interface StateConfig {
 	onBefore?: () => Promise<void> | void;
 	onAfter?: () => void;
 	buttonText: string; 
+	buttonImg?: string;
   }
 
   export type StatesConfig = StateConfig[];

@@ -2,7 +2,7 @@
 import React from 'react';
 import useInterfaceStore from '../store/store';
 import styled from 'styled-components';
-import { useNavigation } from '../managers/navigationManager';
+import ButtonInterface from './interface/ButtonInterface';
 
 const Title = styled.h1`
 	font-size: 1.5em;
@@ -16,21 +16,11 @@ const Title = styled.h1`
 `;
 
 const MainInterface: React.FC = () => {
-	const { setState, state } = useInterfaceStore();
-	const { onNext, onPrevious } = useNavigation();
-
+	const {  state } = useInterfaceStore();
 	return (
 		<div>
 			<Title>{state === 'base' ? 'hello world' : state}</Title>
-			{state === 'base' ?
-				<button onClick={() => setState('DZ')}>GO</button>
-				:
-				<>
-					<button onClick={() => setState('base')}>Retour</button>
-					<button onClick={onPrevious}>Précédent</button>
-					<button onClick={onNext}>Suivant</button>
-				</>
-			}
+		<ButtonInterface />
 		</div>
 	);
 };
