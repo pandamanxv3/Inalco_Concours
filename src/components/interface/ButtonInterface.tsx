@@ -10,18 +10,19 @@ const fadeInAnimation = keyframes`
 
 const ButtonContainerAnimated = styled(ButtonContainer) <{ $isVisible: boolean }>`
 	opacity: 0;
-	animation: ${props => props.$isVisible ? css`${fadeInAnimation} 1s ease-out forwards` : 'none'};
+	animation: ${props => props.$isVisible ? css`${fadeInAnimation} 1s 1s ease-out forwards` : 'none'};
 `;
 
 const ButtonInterface = () => {
-	const { setState, state, triggerCameraRotation, rotationY } = useInterfaceStore();
-	const { cameraRef } = useMeshState().meshRefs; // Valide ici
+	const { setState, state, triggerCameraRotation, popAnimation } = useInterfaceStore();
+	const { cameraRef, CharRef: Char, AnimalRef: Animal } = useMeshState().meshRefs; // Valide ici
 
 	const handleInitialChangeState = () => {
 		if (cameraRef.current !== null) {
-			setState('DZ', () => triggerCameraRotation({ x: -1.57, y: rotationY, z: -1.57172 }, cameraRef.current!));
+			setState('DZ', [() => triggerCameraRotation(cameraRef.current!), () => popAnimation(Char.current!, Animal.current!)]);
 		}
 	};
+	
 	return (
 		<>
 			{state === 'base' ?

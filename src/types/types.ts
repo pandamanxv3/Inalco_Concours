@@ -7,6 +7,12 @@ export interface StateConfig {
 	onAfter?: () => void;
 	buttonText: string; 
 	buttonImg?: string;
+	initialScreenXRotation?: number;
+	initialScreenPosition?: [number, number, number];
+	initialCharacterPosition?: [number, number, number];
+	initialEnvPosition?: [number, number, number];
+	intialAnimalPosition?: [number, number, number];
+
   }
 
   export type StatesConfig = StateConfig[];
