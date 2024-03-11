@@ -8,8 +8,6 @@ function App() {
 	//zustland
 	return (
 		<>
-			<>
-			</>
 			<MeshProvider>
 				<MainInterface />
 				<Scene3D />
