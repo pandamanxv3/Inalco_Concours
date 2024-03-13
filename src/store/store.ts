@@ -25,7 +25,7 @@ type InterfaceState = {
 };
 
 const useInterfaceStore = create<InterfaceState>((set) => ({
-	state: 'base',
+	state: 'FR',
 	setStateAwait: async (newState, onBefore = async () => { }, onAfter = () => { }) => {
 		await onBefore(); 
 		set({ state: newState });
