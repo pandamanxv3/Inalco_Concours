@@ -38,7 +38,7 @@ const ButtonInterface = () => {
 				</>
 				:
 				<>
-					<button onClick={() => setState('base')}>Retour</button>
+					<button style={{fontFamily: 'Astonia', fontSize: '1.5em', padding: '10px', borderRadius: '5px', backgroundColor: '#ffffff', color: '#000000'}} onClick={() => setState('base')}>Retour</button>
 					<ButtonContainerAnimated $direction="up" $isVisible={true}>
 						<ChangeSceneButton direction="up" />
 					</ButtonContainerAnimated>
