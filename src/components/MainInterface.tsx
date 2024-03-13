@@ -43,9 +43,9 @@ const MainTitle = styled.h1`
 
 const TextContainer = styled.div`
 	font-family: 'gilda', sans-serif;
-	max-width: 700px; /* Maximum width of text container */
+	max-width: 650px; /* Maximum width of text container */
 	line-height: 1.1;
-	font-size: 1.3em; /* Larger font size */
+	font-size: 0.9em; /* Larger font size */
 `;
 
 const TextDiv = styled.div`
