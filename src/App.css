@@ -4,6 +4,23 @@
 	box-sizing: border-box;
 }
 
+@font-face {
+    font-family: 'Astonia';
+    src: url('/public/fonts/astonia-webfont.woff2') format('woff2'),
+         url('/public/fonts/astonia-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'gilda';
+    src: url('/public/fonts/gildadisplay-regular1-webfont.woff2') format('woff2'),
+         url('/public/fonts/gildadisplay-regular1-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 html,
 body {
 	margin: 0;

@@ -82,7 +82,7 @@ interface ChangeSceneButtonProps {
 
   const ChangeSceneButton: React.FC<ChangeSceneButtonProps> = ({ direction }) => {
 	const { onNext, onPrevious, previousIndex, nextIndex } = useNavigation();
-	const chevronImg = "/public/img/arrow.png";
+	const chevronImg = "/img/arrow.png";
 	const [isHovered, setIsHovered] = useState<boolean>(false);
 
 	return (

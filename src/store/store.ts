@@ -12,6 +12,9 @@ type InterfaceState = {
 	setState: (newState: StateName, onBefore?: BeforeAfterAction | BeforeAfterAction[], onAfter?: () => void) => void;
 	setStateAwait: (newState: StateName, onBefore?: () => Promise<void>, onAfter?: () => void) => void;
 
+	language: StateName;
+	setLanguage: (newLanguage: StateName) => void;
+
 	rotationY: number;
 	setRotationY: (newRotationY: number) => void;
 
@@ -24,20 +27,26 @@ type InterfaceState = {
 const useInterfaceStore = create<InterfaceState>((set) => ({
 	state: 'base',
 	setStateAwait: async (newState, onBefore = async () => { }, onAfter = () => { }) => {
-		await onBefore(); // Exécuté avant la mise à jour de l'état
+		await onBefore(); 
 		set({ state: newState });
 		onAfter();
 	},
+
 	setState: (newState, onBefore = () => { }, onAfter = () => { }) => {
 		const beforeActions = Array.isArray(onBefore) ? onBefore : [onBefore];
-
-		// Exécuter chaque action sans attendre leur achèvement
 		beforeActions.forEach((action) => {
 			action();
 		});
-
 		set({ state: newState });
 		onAfter();
+	},
+
+	language: 'FR',
+	setLanguage: (newLanguage: StateName) => {
+		if (newLanguage === 'base')
+			newLanguage = 'FR';
+		else
+			set({ language: newLanguage });
 	},
 
 	rotationY: -1.31433,

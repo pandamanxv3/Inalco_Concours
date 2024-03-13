@@ -16,3 +16,13 @@ export interface StateConfig {
   }
 
   export type StatesConfig = StateConfig[];
+
+  export type TextConfig = {
+	name: StateName;
+	context: string;
+	explication:string;
+	soundInfo: string;
+	title: string;
+  };
+  
+  export type TextsConfig = TextConfig[];
