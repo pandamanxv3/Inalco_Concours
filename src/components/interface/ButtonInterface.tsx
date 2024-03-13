@@ -19,7 +19,7 @@ const ButtonInterface = () => {
 
 	const handleInitialChangeState = () => {
 		if (cameraRef.current !== null) {
-			setState('DZ', [() => triggerCameraRotation(cameraRef.current!), () => popAnimation(Char.current!, Animal.current!)]);
+			setState('FR', [() => triggerCameraRotation(cameraRef.current!), () => popAnimation(Char.current!, Animal.current!)]);
 		}
 	};
 	
@@ -27,7 +27,8 @@ const ButtonInterface = () => {
 		<>
 			{state === 'base' ?
 				<>
-					<button onClick={handleInitialChangeState}>GO</button>
+					<button style={{fontFamily: 'Astonia', fontSize: '1.5em', padding: '10px', borderRadius: '5px', backgroundColor: '#ffffff', color: '#000000'}}
+					onClick={handleInitialChangeState}>GO</button>
 					<ButtonContainerAnimated $direction="up" $isVisible={false}>
 						<ChangeSceneButton direction="up" />
 					</ButtonContainerAnimated>

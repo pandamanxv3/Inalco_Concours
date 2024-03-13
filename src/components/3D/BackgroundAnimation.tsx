@@ -1,8 +1,6 @@
 import { RoundedBox, useFBO, MeshTransmissionMaterial } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { useMeshState } from '../../store/ContextBoard';
-import { useRef } from 'react';
-import { Mesh } from "three";
 
 function BackgroundAnimation() {
 	const buffer = useFBO();
