@@ -3,20 +3,30 @@ export type StateName = 'base' | 'KR' | 'FR' | 'DZ';
 
 export interface StateConfig {
 	name: StateName;
-	onBefore?: () => Promise<void> | void;
-	onAfter?: () => void;
 	buttonText: string; 
-	buttonImg?: string;
-	initialScreenXRotation?: number;
-	initialScreenPosition?: [number, number, number];
-	initialCharacterPosition?: [number, number, number];
-	initialEnvPosition?: [number, number, number];
-	intialAnimalPosition?: [number, number, number];
-
+	buttonImg: string;
   }
 
   export type StatesConfig = StateConfig[];
 
+  export interface SceneConfig {
+	name: StateName;
+	buttonText: string; 
+
+	initialScreenXRotation: number;
+	initialScreenPosition: [number, number, number];
+	initialScaleScreen: number;
+	
+	initialCharacterPosition: [number, number, number];
+	intialAnimalPosition: [number, number, number];
+	
+	initialEnvPosition: [number, number, number];
+	maxZEnv: number;
+	totalTimeAnimation: number;
+
+  }
+
+  
   export type TextConfig = {
 	name: StateName;
 	context: string;

@@ -1,5 +1,5 @@
 import styled, { keyframes, css } from 'styled-components';
-import { useNavigation } from '../../managers/navigationManager';
+import { useNavigation } from '../../managers/useNavigation';
 import { sceneConfig } from '../../store/sceneConfig';
 import { useState } from 'react';
 

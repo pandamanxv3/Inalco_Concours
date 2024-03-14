@@ -3,6 +3,8 @@ import { useGLTF, useAnimations } from '@react-three/drei'
 import { GLTF } from 'three-stdlib'
 import { useMeshState } from '../store/ContextBoard'
 import useInterfaceStore from '../store/store'
+import { useFrame } from '@react-three/fiber'
+import { initialConfig } from '../store/initialConfig'
 
 type GLTFResult = GLTF & {
 	nodes: {
@@ -35,9 +37,13 @@ interface GLTFAction extends THREE.AnimationClip {
 
 export function Model(props: JSX.IntrinsicElements['group']) {
 	const group = useRef<THREE.Group>(null);
-	const { nodes, materials, animations } = useGLTF('/3d/SCENE-transformed.glb') as GLTFResult
+	const { nodes, materials, animations } = useGLTF('/3d/SCENE-transformed.glb') as GLTFResult;
 	const { actions } = useAnimations(animations, group);
+	
+	const {state} = useInterfaceStore();
 	const { EnvRef: Env, KrEnv, DzEnv, FrEnv, CharRef: Char, KrChar, DzChar, FrChar, AnimalRef: Animal, KrAnimal, DzAnimal, FrAnimal } = useMeshState().meshRefs;
+	const {intialAnimalPosition, initialCharacterPosition, initialEnvPosition} = initialConfig;
+	
 	useEffect(() => {
 		actions.MaroccoCharAnim!.play();
 		actions.SeolCharAnim!.play();
@@ -46,17 +52,25 @@ export function Model(props: JSX.IntrinsicElements['group']) {
 		actions.slide!.play();
 		actions.fly!.play();
 	})
+	useFrame(( ) => { // initial position  = [1, 10,8]
+		const max: number =-400;
+		if (state !== "base") {
+			//avancer ici
+		}
+		if (Env.current!.position.z < max)
+			Env.current!.position.z = initialEnvPosition[2];
+	})
 
-	const { state } = useInterfaceStore();
+
 	return (
 		<group ref={group} {...props} dispose={null}>
 			<group name="Scene">
-				<group name="Env" ref={Env} position={[1, 22, 20]} scale={[1, 1, 1]} rotation={[0, 0, Math.PI / 10.5]}>
-					<mesh visible={state === "DZ"} name="MaroccoScene" ref={DzEnv} geometry={nodes.MaroccoScene.geometry} material={materials.MainMaterial} position={[14.462, 4.538, 104.857]} rotation={[-Math.PI, 0, -Math.PI]} scale={[18.138, 2.034, 5.606]} />
-					<mesh visible={state === "FR"} name="ParisScene" ref={FrEnv} geometry={nodes.ParisScene.geometry} material={materials.MainMaterial} position={[52.472, -16.851, 110.713]} rotation={[-Math.PI / 2, 0, -Math.PI / 2]} scale={0.085} />
-					<mesh visible={state === "KR"} name="SeolScene" ref={KrEnv} geometry={nodes.SeolScene.geometry} material={materials.MainMaterial} position={[59.341, -37.629, 157.743]} rotation={[-2.531, -1.38, -2.676]} scale={8.039} />
+				<group name="Env" ref={Env} position={initialEnvPosition} scale={[1.5, 1.5, 1.5]} rotation={[0, 0, Math.PI /18]}>
+					<mesh visible={state === "DZ"} name="MaroccoScene" ref={DzEnv} geometry={nodes.MaroccoScene.geometry} material={materials.MainMaterial} position={[20.462, 9.538, 104.857]} rotation={[-Math.PI, 0, -(Math.PI * 1.03)]} scale={[18.138, 2.034, 5.606]} />
+					<mesh visible={state === "FR"} name="ParisScene" ref={FrEnv} geometry={nodes.ParisScene.geometry} material={materials.MainMaterial} position={[52.472, -5.851, 110.713]} rotation={[-Math.PI / 2, 0, -Math.PI / 2]} scale={0.085} />
+					<mesh visible={state === "KR"} name="SeolScene" ref={KrEnv} geometry={nodes.SeolScene.geometry} material={materials.MainMaterial} position={[59.341, -36.629, 157.743]} rotation={[-2.531, -1.32, -2.676]} scale={8.039} />
 				</group>
-				<group name="Characters" ref={Char} scale={[0.7, 0.7, 0.7]} position={[0, 0, 0]}>
+				<group name="Characters" ref={Char} scale={[0.7, 0.7, 0.7]} position={initialCharacterPosition}>
 					<group position={[0, 0, 0]} ref={DzChar}>
 						<group name="MaroccoChar" position={[0, 0, 1.123]} rotation={[Math.PI / 2, 0, 0]} scale={7.404}>
 							<primitive object={nodes.mixamorigHips} />
@@ -103,7 +117,7 @@ export function Model(props: JSX.IntrinsicElements['group']) {
 					</group>
 
 				</group>
-				<group name="Animals" ref={Animal} position={[20, 5, 40]}>
+				<group name="Animals" ref={Animal} position={intialAnimalPosition}>
 					<group ref={FrAnimal} position={[2, 0, 0]} >
 						<group name="Puma" scale={0.192}>
 							<primitive object={nodes._rootJoint} />

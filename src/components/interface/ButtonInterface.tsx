@@ -2,6 +2,8 @@ import styled, { css, keyframes } from 'styled-components';
 import { useMeshState } from '../../store/ContextBoard';
 import useInterfaceStore from '../../store/store';
 import ChangeSceneButton, { ButtonContainer } from './ChangeSceneButton';
+import useMusicPlayer from '../../managers/useMusicPlayer';
+import { useMusicPlayerz } from '../../managers/contextMusic';
 
 const fadeInAnimation = keyframes`
   from {opacity: 0;}
@@ -14,21 +16,21 @@ const ButtonContainerAnimated = styled(ButtonContainer) <{ $isVisible: boolean }
 `;
 
 const ButtonInterface = () => {
-	const { setState, state, triggerCameraRotation, popAnimation } = useInterfaceStore();
-	const { cameraRef, CharRef: Char, AnimalRef: Animal } = useMeshState().meshRefs; // Valide ici
+	const { setState, state, startExperience } = useInterfaceStore();
+	const { cameraRef, CharRef: Char, AnimalRef: Animal, EnvRef: Env } = useMeshState().meshRefs; // Valide ici
+	// const {play, reset} = useMusicPlayer();
+	const { play, reset } = useMusicPlayerz();
 
 	const handleInitialChangeState = () => {
-		if (cameraRef.current !== null) {
-			setState('FR', [() => triggerCameraRotation(cameraRef.current!), () => popAnimation(Char.current!, Animal.current!)]);
-		}
+		startExperience(cameraRef.current!, Env.current!, Char.current!, Animal.current!, play, reset);
 	};
-	
+
 	return (
 		<>
 			{state === 'base' ?
 				<>
-					<button style={{fontFamily: 'Astonia', fontSize: '1.5em', padding: '10px', borderRadius: '5px', backgroundColor: '#ffffff', color: '#000000'}}
-					onClick={handleInitialChangeState}>GO</button>
+					<button style={{ fontFamily: 'Astonia', fontSize: '1.5em', padding: '10px', borderRadius: '5px', backgroundColor: '#ffffff', color: '#000000' }}
+						onClick={handleInitialChangeState}>GO</button>
 					<ButtonContainerAnimated $direction="up" $isVisible={false}>
 						<ChangeSceneButton direction="up" />
 					</ButtonContainerAnimated>
@@ -38,7 +40,7 @@ const ButtonInterface = () => {
 				</>
 				:
 				<>
-					<button style={{fontFamily: 'Astonia', fontSize: '1.5em', padding: '10px', borderRadius: '5px', backgroundColor: '#ffffff', color: '#000000'}} onClick={() => setState('base')}>Retour</button>
+					<button style={{ fontFamily: 'Astonia', fontSize: '1.5em', padding: '10px', borderRadius: '5px', backgroundColor: '#ffffff', color: '#000000' }} onClick={() => setState('base')}>Retour</button>
 					<ButtonContainerAnimated $direction="up" $isVisible={true}>
 						<ChangeSceneButton direction="up" />
 					</ButtonContainerAnimated>

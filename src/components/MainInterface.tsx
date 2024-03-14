@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { TextConfig } from '../store/textConfig';
-import { useNavigation } from '../managers/navigationManager';
+import { useNavigation } from '../managers/useNavigation';
 import ButtonInterface from './interface/ButtonInterface';
 import useInterfaceStore from '../store/store';
 
@@ -17,7 +17,7 @@ const fadeInAnimation = keyframes`
 `;
 
 interface MainContainerProps {
-	state: string;
+	$state: string;
 }
 const MainContainer = styled.div<MainContainerProps>`
 	font-family: 'Astonia', sans-serif;
@@ -30,7 +30,7 @@ const MainContainer = styled.div<MainContainerProps>`
 	padding: 20px; /* Add some padding */
 	text-align: left; /* Center text for all children */
 	pointer-events: none;
-	animation: ${({ state }) => state === 'base' ? fadeInAnimation : fadeInOutAnimation} 1s forwards;
+	animation: ${({ $state }) => $state === 'base' ? fadeInAnimation : fadeInOutAnimation} 1s forwards;
 `;
 
 const MainTitle = styled.h1`
@@ -71,7 +71,7 @@ const MainInterface: React.FC = () => {
 	return (
 		<>
 		<ButtonInterface />
-		<MainContainer state={state}>
+		<MainContainer $state={state}>
 			<MainTitle dangerouslySetInnerHTML={{ __html: TextConfig[currentLanguageIndex].title }}></MainTitle>
 			<TextContainer>
 				<TextDiv>{TextConfig[currentLanguageIndex].context}</TextDiv>
