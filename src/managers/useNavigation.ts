@@ -3,7 +3,6 @@ import { sceneConfig } from '../store/sceneConfig';
 import useInterfaceStore from '../store/store';
 import { StateName } from '../types/types';
 import { useMusicPlayerz } from './contextMusic';
-import useMusicPlayer from './useMusicPlayer';
 
 export const useNavigation = () => {
 	const { state, setStateAwait, popAnimation, popOutAnimation, screenChangeAnimation, setLanguage, language } = useInterfaceStore();

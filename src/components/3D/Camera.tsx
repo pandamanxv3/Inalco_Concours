@@ -1,9 +1,8 @@
-import { useThree } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect } from "react";
 import { PerspectiveCamera as ThreePerspectiveCamera } from 'three';
 import { useMeshState } from "../../store/ContextBoard";
 import { PerspectiveCamera } from "@react-three/drei";
-import useInterfaceStore from "../../store/store";
 
 function Camera() {
 
@@ -11,13 +10,10 @@ function Camera() {
 
 	const { cameraRef } = useMeshState().meshRefs;
 
-	const { state, setRotationY } = useInterfaceStore();
-
 	useEffect(() => {
 		const perspectiveCamera = camera as unknown as ThreePerspectiveCamera;
 
 		const aspectRatio = size.width / size.height;
-		const rotationAdjustment = aspectRatio <= 1.8 ? -1.41433 : -1.31433;
 		const zoomAdjustment = aspectRatio <= 1.8 ? 0.8 : 1.0;
 
 		const calculateFov = (aspectRatio: number) => {
@@ -29,10 +25,6 @@ function Camera() {
 				return 105;
 			}
 		};
-		if (state === 'base')
-			setRotationY(rotationAdjustment);
-		else
-			perspectiveCamera.rotation.set(-1.57, rotationAdjustment, -1.57172);
 		perspectiveCamera.zoom = zoomAdjustment;
 		perspectiveCamera.fov = calculateFov(aspectRatio);
 		perspectiveCamera.updateProjectionMatrix();
@@ -40,7 +32,7 @@ function Camera() {
 
 	return (
 		<>
-			<PerspectiveCamera ref={cameraRef} makeDefault position={[-30, 29, 42]} rotation={[-1.57, 0, -1.57172]} />
+			<PerspectiveCamera ref={cameraRef} makeDefault position={[-30, 29, 42]} rotation={[-1.57, -1.31433, -1.57172]} />
 		</>
 	)
 }

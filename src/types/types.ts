@@ -1,3 +1,4 @@
+import { subtitleType } from "../store/subtitle";
 
 export type StateName = 'base' | 'KR' | 'FR' | 'DZ';
 
@@ -5,6 +6,7 @@ export interface StateConfig {
 	name: StateName;
 	buttonText: string; 
 	buttonImg: string;
+	subtitle: subtitleType[];
   }
 
   export type StatesConfig = StateConfig[];
@@ -13,7 +15,7 @@ export interface StateConfig {
 	name: StateName;
 	buttonText: string; 
 
-	initialScreenXRotation: number;
+	initialScreenXRotation: [number, number, number];
 	initialScreenPosition: [number, number, number];
 	initialScaleScreen: number;
 	

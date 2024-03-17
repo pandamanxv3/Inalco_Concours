@@ -21,6 +21,24 @@
 
 }
 
+@font-face {
+    font-family: 'sincopa';
+    src: url('/public/fonts/SincopaNina.woff2') format('woff2'),
+         url('/public/fonts/SincopaNina.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'sincopaElla';
+    src: url('/public/fonts/SincopaElla.woff2') format('woff2'),
+         url('/public/fonts/SincopaElla.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 html,
 body {
 	margin: 0;

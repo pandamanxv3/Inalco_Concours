@@ -9,19 +9,23 @@ type BeforeAfterAction = () => void | Promise<void>;
 
 type InterfaceState = {
 	state: StateName;
+	setState: (newState: StateName, onBefore?: BeforeAfterAction | BeforeAfterAction[], onAfter?: () => void) => void;
+	setStateAwait: (newState: StateName, onBefore?: () => Promise<void>, onAfter?: () => void) => void;
+
+	endAnimationIntro: boolean;
 	experienceStarted: boolean;
 	startExperience: (CameraRef: PerspectiveCamera, Env: Group, Char: Group, Animal: Group, play: (number: number) => void, reset: () => void) => void;
 	resetExperience: (environment: Group, character: Group, animal: Group, reset: () => void) => void;
 	setExperienceStarted: (newExperienceStarted: boolean) => void;
-	setState: (newState: StateName, onBefore?: BeforeAfterAction | BeforeAfterAction[], onAfter?: () => void) => void;
-	setStateAwait: (newState: StateName, onBefore?: () => Promise<void>, onAfter?: () => void) => void;
-
+	timer: number;
+	updateTimer: (elapsedTime: number) => void;
 	language: StateName;
 	setLanguage: (newLanguage: StateName) => void;
 
 	rotationY: number;
 	setRotationY: (newRotationY: number) => void;
 
+	animation: gsap.core.Tween | null;
 	triggerCameraRotation: (camera: PerspectiveCamera) => void;
 	screenChangeAnimation: (ScreenRef: Mesh) => void;
 	popAnimation: (character: Group, animal: Group) => void;
@@ -44,29 +48,70 @@ const useInterfaceStore = create<InterfaceState>((set) => ({
 		set({ state: newState });
 		onAfter();
 	},
-	
+
 	/* Experience */
+	endAnimationIntro: false,
 	experienceStarted: false,
 	setExperienceStarted: (newExperienceStarted: boolean) => {
 		set({ experienceStarted: newExperienceStarted });
 	},
-
 	startExperience: (CameraRef: PerspectiveCamera, Env: Group, Char: Group, Animal: Group, play: (number: number) => void, reset: () => void) => {
-		const { setState, triggerCameraRotation, popAnimation, resetExperience } = useInterfaceStore.getState();
+		const { setState, setStateAwait, triggerCameraRotation, popAnimation, resetExperience } = useInterfaceStore.getState();
 		const { maxZEnv, totalTimeAnimation } = initialConfig;
-		console.log('startExperience');
-		setState('FR', [() => triggerCameraRotation(CameraRef!), () => popAnimation(Char, Animal), () => play(1)]);
-		gsap.to(Env.position, {
+
+		// const todoBefore = () => {
+		// 	return new Promise<void>((resolve) => {
+		// 		set({ endAnimationIntro: true })
+		// 		gsap.to(Env.position, {
+		// 			duration: 2,
+		// 			onComplete: () => {
+		// 				set({ experienceStarted: true });
+
+		// 				resolve();
+		// 			},
+		// 		});
+		// 	});
+		// };
+
+		// const toDoAfter = () => {
+		// 	triggerCameraRotation(CameraRef!);
+		// 	() => popAnimation(Char, Animal);
+		// 	() => play(1);
+		// 	const animation = gsap.to(Env.position, {
+		// 		duration: totalTimeAnimation,
+		// 		z: maxZEnv,
+		// 		onComplete: () => {
+		// 			resetExperience(Env, Char, Animal, reset);
+		// 		},
+		// 	});
+		// 	set({ animation: animation });
+
+		// }
+
+		// setStateAwait('FR', todoBefore, toDoAfter);
+		set({ experienceStarted: true });
+
+		setState('FR', [
+			() => triggerCameraRotation(CameraRef!),
+			() => {
+				const targetAnimalPos = initialConfig.intialAnimalPosition!;
+				Animal.position.set(targetAnimalPos[0], targetAnimalPos[1], -70);
+				Char.position.z = -50;
+				setTimeout(() => popAnimation(Char, Animal), 2000)
+			},
+			() => play(1)]);
+		const animation = gsap.to(Env.position, {
 			duration: totalTimeAnimation,
 			z: maxZEnv,
 			onComplete: () => {
 				resetExperience(Env, Char, Animal, reset);
 			},
 		});
+		set({ animation: animation });
 	},
 	resetExperience: (Env: Group, Character: Group, Animal: Group, reset: () => void) => {
 		const { initialEnvPosition } = initialConfig;
-		const { setStateAwait, popOutAnimation } = useInterfaceStore.getState();
+		const { setStateAwait, popOutAnimation, animation } = useInterfaceStore.getState();
 
 		setStateAwait('base',
 			() => {
@@ -74,11 +119,18 @@ const useInterfaceStore = create<InterfaceState>((set) => ({
 			},
 			() => {
 				reset();
+				set({ timer: 0 });
 				if (Env) {
+					animation!.kill();
 					set({ experienceStarted: false });
 					Env.position.set(initialEnvPosition[0], initialEnvPosition[1], initialEnvPosition[2]);
 				}
 			});
+	},
+
+	timer: 0,
+	updateTimer: (elapsedTime: number) => {
+		set({ timer: elapsedTime });
 	},
 
 	/* Language */
@@ -95,6 +147,7 @@ const useInterfaceStore = create<InterfaceState>((set) => ({
 	setRotationY: (newRotationY: number) => {
 		set({ rotationY: newRotationY });
 	},
+	animation: null,
 
 	/* Animations */
 	popAnimation(character: Group, animal: Group) {

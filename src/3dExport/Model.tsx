@@ -55,6 +55,7 @@ export function Model(props: JSX.IntrinsicElements['group']) {
 	useFrame(( ) => { // initial position  = [1, 10,8]
 		const max: number =-400;
 		if (state !== "base") {
+			console.log('state', state);
 			//avancer ici
 		}
 		if (Env.current!.position.z < max)
