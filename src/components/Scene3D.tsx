@@ -1,23 +1,42 @@
-import { Canvas } from '@react-three/fiber';
+// Scene3D.js
+import { Canvas, useThree } from '@react-three/fiber';
 import Experience from './3D/Experience';
-// import { Environment } from '@react-three/drei';
 import PostProcessing from './3D/PostProcessing';
-// import { Environment } from '@react-three/drei';
+import useInterfaceStore from '../store/store'; // Mettez à jour le chemin selon votre structure
+import {  useSpring } from '@react-spring/core';
+
+function BackgroundColorAnimator() {
+	const { gl } = useThree();
+	const { state } = useInterfaceStore();
+	const colors = {
+		base: '#282828',
+		KR: '#483e4e', // Exemple de couleur, ajustez selon vos besoins
+		FR: '#343b41',
+		DZ: '#3c3526',
+	};
+
+	useSpring({
+		to: { color: colors[state] },
+		onChange: (params: { value: any }) => {
+			gl.setClearColor(params.value.color);
+		},
+		config: { duration: 2000 } // Ou utilisez une configuration prédéfinie comme 'molasses'
+	  });
+
+	return <></>;
+}
 
 function Scene3D() {
-
-
 	return (
 		<Canvas
 			gl={{ antialias: false }} flat
 			shadows
 			style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1, backgroundColor: '#282828' }}>
-			{/* <Environment files="/public/hdri/gradient_min_19.hdr" /> */}
 			<Experience />
+			<BackgroundColorAnimator />
 			<ambientLight intensity={3} />
 			<PostProcessing />
-			{/* <OrbitControls /> */}
-		</Canvas >
+		</Canvas>
 	);
 }
 
