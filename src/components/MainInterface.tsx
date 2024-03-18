@@ -35,11 +35,18 @@ const MainContainer = styled.div<MainContainerProps>`
 `;
 
 const MainTitle = styled.h1`
-
+	margin-top: 10px; /* Margin top */
 	font-size: min(2.6vw, 50px); /* Responsive font size */
 	color: #c6a283;/* Customize color */
 	margin-bottom:min(40vh, 400px);
 	letter-spacing: 0.1em; /* Add some letter spacing */
+	
+	/* responsive font size */
+	@media (max-height: 700px) {
+		margin-bottom:min(40vh, 400px);
+		margin-top: 0px;
+
+	}
 
 `;
 
@@ -51,11 +58,16 @@ const TextContainer = styled.div`
 	line-height: 1.1;
 	font-size: min(calc(6px + 0.7vw), 20px); /* Smaller font size */
 	z-index: 80;
+	@media (max-height: 700px) {
+		font-size: min(calc(6px + 0.5vw), 15px); /* Smaller font size */
+
+
+	}
 `;
 
 const TextDiv = styled.div`
-	margin: 10px 0; /* Margin top and bottom */
-	padding: 10px; /* Padding inside the divs */
+	margin:  min(10px, 1vh) 0; /* Margin top and bottom */
+	padding: min(10px, 1vh); /* Padding inside the divs */
 	text-align: justify; /* Justify text */
 	color: #ffffff;
 	border-radius: 5px; /* Rounded corners for the divs */
