@@ -11,8 +11,8 @@ function BackgroundColorAnimator() {
 	const colors = {
 		base: '#282828',
 		KR: '#483e4e', // Exemple de couleur, ajustez selon vos besoins
-		FR: '#343b41',
-		DZ: '#3c3526',
+		FR: '#475159',
+		DZ: '#a4896dc7',
 	};
 
 	useSpring({
