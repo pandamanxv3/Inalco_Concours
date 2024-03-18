@@ -4,6 +4,8 @@ import ButtonInterface from './interface/ButtonInterface';
 import useInterfaceStore from '../store/store';
 import SubtitlesManager from './interface/SubtitlesManager';
 import ImageIntro from './interface/ImageIntro';
+import { useState } from 'react';
+import Credit from './interface/Credit';
 
 const fadeInAnimation = keyframes`
   0% { opacity: 1; }
@@ -100,13 +102,24 @@ const LogoImg = styled.img`
 	user-select: none;
 `;
 
+const NoSelect  = styled.div`
+	-webkit-touch-callout: none; 
+	-webkit-user-select: none; 
+	-khtml-user-select: none; 
+	-moz-user-select: none; 
+	-ms-user-select: none; 
+	user-select: none; 
+`;
+
 const MainInterface: React.FC = () => {
 	const { state } = useInterfaceStore();
+	const [isCreditOpen, setIsCreditOpen] = useState<boolean>(false);
 
 	return (
-		<>
+		<NoSelect>
 			<ButtonInterface />
 			<SubtitlesManager />
+			<Credit isVisible={isCreditOpen} onClose={(state:boolean) => setIsCreditOpen(state)} />
 			<MainContainer $state={state}>
 				<ImageIntro />
 				<MainTitle dangerouslySetInnerHTML={{ __html: TextConfigScene.title }} />
@@ -120,7 +133,7 @@ const MainInterface: React.FC = () => {
 					<TextDivFinal>Commencez l'expérience en cliquant sur l'écran.</TextDivFinal>
 				</TextContainer>
 			</MainContainer>
-		</>
+		</NoSelect>
 	);
 };
 
