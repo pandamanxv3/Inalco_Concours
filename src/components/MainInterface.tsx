@@ -126,20 +126,22 @@ const NoSelect = styled.div`
 
 
 const Overlay = styled.div<{ $isVisible: boolean }>`
+	z-index: 80;
+
   animation: ${({ $isVisible }) => ($isVisible ? fadeInAnimation : fadeOutAnimation)} 0.5s ease forwards; 
 `;
 
 const MainInterface: React.FC = () => {
-	const { state } = useInterfaceStore();
+	const { state, experienceStarted } = useInterfaceStore();
 	const [isCreditOpen, setIsCreditOpen] = useState<boolean>(false);
 
 	return (
 		<NoSelect>
-			{!isCreditOpen && <ButtonInterface />}
 			<SubtitlesManager />
-			<Credit isVisible={isCreditOpen} onClose={(state: boolean) => setIsCreditOpen(state)} />
-			<ImageIntro />
+			{!experienceStarted && <Credit isVisible={isCreditOpen} onClose={(state: boolean) => setIsCreditOpen(state)} />}
+			{!isCreditOpen && <ButtonInterface />}
 			<MainContainer $state={state}>
+				<ImageIntro />
 				<MainTitle dangerouslySetInnerHTML={{ __html: TextConfigScene.title }} />
 				<Overlay $isVisible={isCreditOpen} >
 					<TextContainer>
