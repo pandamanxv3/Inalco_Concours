@@ -23,7 +23,7 @@ export const frSubtitle: subtitleType[] = [
 		endTimer: 25.5
 	},
 	{
-		fr: "La ville m'offre sa vitalité, son énergie, mais cache aussi ses pièges, ses zones d'ombre où il faut savoir montrer les croc.",
+		fr: "La ville m'offre sa vitalité, son énergie, mais cache aussi ses pièges, ses zones d'ombres où il faut savoir montrer les crocs.",
 		kr: "이 도시는 나에게 활력과 에너지를 주지만, 함정과 어두운 구역도 숨기고 있어. 그곳에서는 날카로운 이빨을 보여줄 줄 알아야 해.",
 		arabic: "تمنحني المدينة حيويتها وطاقتها، لكنها أيضًا تخبئ مكائدها ومناطقها المظلمة التي يجب فيها أن أظهر الأنياب.",
 		startTimer: 29,
@@ -51,7 +51,7 @@ export const frSubtitle: subtitleType[] = [
 		endTimer: 58
 	},
 	{
-		fr: "Mais la plus part du temps je pense que c’est bien tel quel.",
+		fr: "Mais la plupart du temps je pense que c’est bien tel quel.",
 		kr: "하지만 대부분의 시간에는 그것이 그대로 좋다고 생각해.",
 		arabic: "ولكن معظم الوقت أعتقد أنها جيدة كما هي.",
 		startTimer: 60,
@@ -131,7 +131,7 @@ export const krSubtitle: subtitleType[] = [
 		endTimer: 38
 	},
 	{
-		fr: "Le matin, je me sens léger, presque éthéré, surfant sur l'océan.",
+		fr: "Le matin, je me sens légère, presque éthérée, surfant sur l'océan.",
 		kr: "새벽엔 뭐 서핑이나 바다수영 이런거 하면 거기가 극락이지.",
 		arabic: "في الصباح، أشعر بخفة، تقريبًا طيفي، أتزلج على المحيط.",
 		startTimer: 41,
