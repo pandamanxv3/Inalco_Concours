@@ -6,16 +6,16 @@
 
 @font-face {
     font-family: 'Astonia';
-    src: url('/public/fonts/astonia-webfont.woff2') format('woff2'),
-         url('/public/fonts/astonia-webfont.woff') format('woff');
+    src: url('/fonts/astonia-webfont.woff2') format('woff2'),
+         url('/fonts/astonia-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'gilda';
-    src: url('/public/fonts/gildadisplay-regular1-webfont.woff2') format('woff2'),
-         url('/public/fonts/gildadisplay-regular1-webfont.woff') format('woff');
+    src: url('/fonts/gildadisplay-regular1-webfont.woff2') format('woff2'),
+         url('/fonts/gildadisplay-regular1-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 
@@ -23,8 +23,8 @@
 
 @font-face {
     font-family: 'sincopa';
-    src: url('/public/fonts/SincopaNina.woff2') format('woff2'),
-         url('/public/fonts/SincopaNina.woff') format('woff');
+    src: url('/fonts/SincopaNina.woff2') format('woff2'),
+         url('/fonts/SincopaNina.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 
@@ -32,8 +32,8 @@
 
 @font-face {
     font-family: 'sincopaElla';
-    src: url('/public/fonts/SincopaElla.woff2') format('woff2'),
-         url('/public/fonts/SincopaElla.woff') format('woff');
+    src: url('/fonts/SincopaElla.woff2') format('woff2'),
+         url('/fonts/SincopaElla.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 
