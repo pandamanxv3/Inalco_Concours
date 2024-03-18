@@ -48,9 +48,7 @@ function Screen() {
 	}, [screenRef.current, isInitialAnimationFinish, experienceStarted]);
 
 	useEffect(() => {
-		console.log('reset', reset);
 		if (screenRef.current && reset) {
-			console.log('resettttttttttt');
 			setCanStart(false);
 			gsap.to(screenRef.current.scale, {
 				duration: 3,
@@ -92,7 +90,6 @@ function Screen() {
 
 			const material = screenRef.current!.material;
 			if (material instanceof MeshPhysicalMaterial) {
-				console.log('material', material);
 				gsap.to(material, {
 					thickness: 0.3,
 					duration: 1,

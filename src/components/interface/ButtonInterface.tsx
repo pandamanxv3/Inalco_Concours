@@ -55,7 +55,6 @@ const ButtonInterface = () => {
 
 	const retour:string = "< Retour";
 	const handleInitialChangeState = () => {
-		console.log('handleInitialChangeState');
 		setExperienceStarted(true);
 		startExperience(cameraRef.current!, Env.current!, Char.current!, Animal.current!, play, reset);
 	};

@@ -84,14 +84,13 @@ interface ChangeSceneButtonProps {
 
 const ChangeSceneButton: React.FC<ChangeSceneButtonProps> = ({ direction }) => {
 	const { onNext, onPrevious, previousIndex, nextIndex } = useNavigation();
-	const { experienceStarted } = useInterfaceStore();
+	const {experienceStarted} = useInterfaceStore();
 	const chevronImg = "/img/arrow.png";
 	const [isHovered, setIsHovered] = useState<boolean>(false);
 	const [isClicked, setIsClicked] = useState<boolean>(true);
 
 	useEffect(() => {
 		if (!experienceStarted) return;
-		console.log('useEffect');
 		const returnSetTimeOut = setTimeout(() => {
 			setIsClicked(false);
 		}, 6000);
