@@ -13,5 +13,5 @@ export const initialConfig: SceneConfig = {
 
 	initialEnvPosition: [1, 10, 8],
 	maxZEnv: -387,
-	totalTimeAnimation: 120
+	totalTimeAnimation: 135
 };

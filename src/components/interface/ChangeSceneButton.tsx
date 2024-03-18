@@ -1,7 +1,8 @@
 import styled, { keyframes, css } from 'styled-components';
 import { useNavigation } from '../../managers/useNavigation';
 import { sceneConfig } from '../../store/sceneConfig';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import useInterfaceStore from '../../store/store';
 
 //#region CSS
 
@@ -22,6 +23,7 @@ const floatUpAnimation = keyframes`
     transform: rotate(180deg) translate(50%) translateY(0);
   }
 `;
+
 
 const floatDownAnimation = keyframes`
   0% {
@@ -78,12 +80,34 @@ const Button = styled(ButtonWithIcon)`
 //#endregion
 interface ChangeSceneButtonProps {
 	direction: "up" | "down";
-  }
+}
 
-  const ChangeSceneButton: React.FC<ChangeSceneButtonProps> = ({ direction }) => {
+const ChangeSceneButton: React.FC<ChangeSceneButtonProps> = ({ direction }) => {
 	const { onNext, onPrevious, previousIndex, nextIndex } = useNavigation();
+	const { experienceStarted } = useInterfaceStore();
 	const chevronImg = "/img/arrow.png";
 	const [isHovered, setIsHovered] = useState<boolean>(false);
+	const [isClicked, setIsClicked] = useState<boolean>(true);
+
+	useEffect(() => {
+		if (!experienceStarted) return;
+		console.log('useEffect');
+		const returnSetTimeOut = setTimeout(() => {
+			setIsClicked(false);
+		}, 6000);
+		return () => clearTimeout(returnSetTimeOut);
+
+	}, [experienceStarted]);
+
+	//set a TimeOut to change the scene so that the animation can play before the scene changes
+	const handleClick = () => {
+		if (isClicked) return;
+		setIsClicked(true);
+		direction === "up" ? onNext() : onPrevious();
+		setTimeout(() => {
+			setIsClicked(false);
+		}, 6000);
+	}
 
 	return (
 		<>
@@ -91,7 +115,7 @@ interface ChangeSceneButtonProps {
 				onMouseEnter={() => setIsHovered(true)}
 				onMouseLeave={() => setIsHovered(false)}
 				$direction={direction}>
-				<Button  $icon={sceneConfig[direction === "up" ? nextIndex : previousIndex]?.buttonImg || ""} onClick={direction === "up" ? onNext : onPrevious} >
+				<Button $icon={sceneConfig[direction === "up" ? nextIndex : previousIndex]?.buttonImg || ""} onClick={handleClick} >
 					<Chevron $direction={direction} $isHovered={isHovered} src={chevronImg} alt="Suivant" />
 				</Button>
 			</ButtonContainer >

@@ -1,4 +1,4 @@
-import { useFrame, useThree } from '@react-three/fiber';
+import { useFrame } from '@react-three/fiber';
 import useInterfaceStore from '../../store/store';
 import EnvironmentAdvancing from './EnvironmentAdvancing';
 import { useState } from 'react';
@@ -7,7 +7,6 @@ function Animation() {
 	const [isExperienceStarted, setIsExperienceStarted] = useState<boolean>(false);
 	const [startTimer, setStartTimer] = useState<number>(0);
 	const { experienceStarted, updateTimer } = useInterfaceStore();
-	const { clock } = useThree();
 
 	// useEffect(() => {
 	// 	if (experienceStarted) {

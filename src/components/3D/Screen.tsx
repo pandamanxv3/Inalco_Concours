@@ -1,4 +1,4 @@
-import { RoundedBox, useFBO, MeshTransmissionMaterial, useTexture } from '@react-three/drei';
+import { RoundedBox, useFBO, MeshTransmissionMaterial } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { useMeshState } from '../../store/ContextBoard';
 import { initialConfig } from '../../store/initialConfig';
@@ -13,21 +13,66 @@ function Screen() {
 	const [isNormalSize, setIsNormalSize] = useState<boolean>(false);
 	const [firstChange, setFirstChange] = useState<boolean>(false);
 	const [currentIndex, setCurrentIndex] = useState<number>(1);
-	const { experienceStarted, state } = useInterfaceStore.getState();
+	const { setCanStart } = useInterfaceStore.getState();
 	const { initialScaleScreen, initialScreenXRotation: initialScreenRotation } = initialConfig;
 	const { EnvRef: Env, screenRef, DzEnv, FrEnv, KrEnv } = useMeshState().meshRefs;
 	const envsTab = [DzEnv, FrEnv, KrEnv];
 
+	const reset = useInterfaceStore(state => state.reset);
+	const experienceStarted = useInterfaceStore(state => state.experienceStarted);
 	const makeAllEnvsInvisible = () => {
 		envsTab.forEach(env => {
 			if (env.current) env.current.visible = false;
 		});
 	}
 
+
+
+	useEffect(() => {
+		if (screenRef.current && !isInitialAnimationFinish && !experienceStarted) {
+			gsap.to(screenRef.current.scale, {
+				duration: 3,
+				x: initialScaleScreen * 0.6,
+				y: initialScaleScreen * 0.6,
+				z: initialScaleScreen * 0.6,
+				ease: "power3.inOut",
+				onComplete: () => {
+					setIsNormalSize(true);
+					setCanStart(true);
+
+				}
+
+			});
+			setInitialAnimationFinish(true);
+		}
+	}, [screenRef.current, isInitialAnimationFinish, experienceStarted]);
+
+	useEffect(() => {
+		console.log('reset', reset);
+		if (screenRef.current && reset) {
+			console.log('resettttttttttt');
+			setCanStart(false);
+			gsap.to(screenRef.current.scale, {
+				duration: 3,
+				x: 0,
+				y: 0,
+				z: 0,
+				ease: "power3.inOut",
+				onComplete: () => {
+					setIsNormalSize(false);
+					setInitialAnimationFinish(false);
+					const material = screenRef.current!.material;
+					if (material instanceof MeshPhysicalMaterial)
+						material.thickness = 100;
+				}
+			});
+		
+		}
+	}, [reset]);
+
 	useEffect(() => {
 
 		if (experienceStarted) {
-			console.log('experienceStarted', experienceStarted);
 			makeAllEnvsInvisible();
 			FrEnv.current!.visible = true;
 			gsap.to(screenRef.current!.scale, {
@@ -53,12 +98,15 @@ function Screen() {
 					duration: 1,
 					ease: "power3.inOut",
 					onComplete: () => {
-						
+
+
 					}
 				});
 			}
 		}
 	}, [experienceStarted]);
+
+
 	useFrame((state, deltaTime: number) => {
 		if (!Env.current) return
 		if (Env.current) Env.current.visible = true;
@@ -69,20 +117,6 @@ function Screen() {
 		if (Env.current) Env.current.visible = false;
 		if (screenRef.current) screenRef.current.visible = true;
 
-		if (!isInitialAnimationFinish && screenRef.current) {
-			gsap.to(screenRef.current.scale, {
-				duration: 3,
-				x: initialScaleScreen * 0.6,
-				y: initialScaleScreen * 0.6,
-				z: initialScaleScreen * 0.6,
-				ease: "power3.inOut",
-				onComplete: () => {
-					setIsNormalSize(true);
-				}
-
-			});
-			setInitialAnimationFinish(true);
-		}
 
 		if (screenRef.current && !experienceStarted && isNormalSize) {
 			if (screenRef.current) {

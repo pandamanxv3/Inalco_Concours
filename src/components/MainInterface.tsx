@@ -1,18 +1,16 @@
-import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import { TextConfig } from '../store/textConfig';
-import { useNavigation } from '../managers/useNavigation';
+import { TextConfigScene } from '../store/textConfig';
 import ButtonInterface from './interface/ButtonInterface';
 import useInterfaceStore from '../store/store';
 import SubtitlesManager from './interface/SubtitlesManager';
 import ImageIntro from './interface/ImageIntro';
 
-const fadeInOutAnimation = keyframes`
+const fadeInAnimation = keyframes`
   0% { opacity: 1; }
   100% { opacity: 0; }
 `;
 
-const fadeInAnimation = keyframes`
+const fadeOutAnimation = keyframes`
   0% { opacity: 0; }
   100% { opacity: 1; }
 `;
@@ -33,7 +31,7 @@ const MainContainer = styled.div<MainContainerProps>`
 	height: 100vh; /* Use full viewport height */
 	text-align: left; /* Center text for all children */
 	pointer-events: none;
-	animation: ${({ $state }) => $state === 'base' ? fadeInAnimation : fadeInOutAnimation} 1s forwards;
+	animation: ${({ $state }) => $state === 'base' ? fadeOutAnimation : fadeInAnimation} 1s forwards;
 `;
 
 const MainTitle = styled.h1`
@@ -51,7 +49,7 @@ const TextContainer = styled.div`
 	font-family: 'sincopa', sans-serif;
 	max-width: 650px; /* Maximum width of text container */
 	line-height: 1.1;
-	font-size: min(1vw, 20px); /* Smaller font size */
+	font-size: min(calc(6px + 0.7vw), 20px); /* Smaller font size */
 	z-index: 80;
 `;
 
@@ -61,6 +59,16 @@ const TextDiv = styled.div`
 	text-align: justify; /* Justify text */
 	color: #ffffff;
 	border-radius: 5px; /* Rounded corners for the divs */
+`;
+
+const TextDivFinal = styled.div`
+	margin: 10px 0; /* Margin top and bottom */
+	padding: 10px; /* Padding inside the divs */
+	text-align: justify; /* Justify text */
+	font-size: min(calc(4px + 1.3vw), 30px);
+	color: #c6a283;
+	border-radius: 5px; /* Rounded corners for the divs */
+	text-align: center;
 `;
 
 const InstructionContainer = styled.div`
@@ -93,23 +101,23 @@ const LogoImg = styled.img`
 `;
 
 const MainInterface: React.FC = () => {
-	const { currentLanguageIndex } = useNavigation();
 	const { state } = useInterfaceStore();
+
 	return (
 		<>
 			<ButtonInterface />
 			<SubtitlesManager />
 			<MainContainer $state={state}>
 				<ImageIntro />
-				<MainTitle dangerouslySetInnerHTML={{ __html: TextConfig[currentLanguageIndex].title }} />
+				<MainTitle dangerouslySetInnerHTML={{ __html: TextConfigScene.title }} />
 				<TextContainer>
-					<TextDiv>{TextConfig[currentLanguageIndex].context}</TextDiv>
-					<TextDivInstruction>{TextConfig[currentLanguageIndex].explication}</TextDivInstruction>
+					<TextDiv>{TextConfigScene.context}</TextDiv>
+					<TextDivInstruction>{TextConfigScene.explication}</TextDivInstruction>
 					<InstructionContainer>
-						<TextDiv>{TextConfig[currentLanguageIndex].soundInfo}</TextDiv>
+						<TextDiv dangerouslySetInnerHTML={{ __html: TextConfigScene.soundInfo }} />
 						<LogoImg src="/img/headphone.svg" alt="logo" />
 					</InstructionContainer>
-					{/* Ajouter plus de TextDiv selon les besoins */}
+					<TextDivFinal>Commencez l'expérience en cliquant sur l'écran.</TextDivFinal>
 				</TextContainer>
 			</MainContainer>
 		</>

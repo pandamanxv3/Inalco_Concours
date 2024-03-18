@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import useInterfaceStore from "../../store/store";
 import { subtitleType } from '../../store/subtitle';

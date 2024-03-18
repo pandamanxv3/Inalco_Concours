@@ -9,14 +9,38 @@ const fadeInAnimation = keyframes`
   to {opacity: 1;}
 `;
 
-const ButtonStart = styled.button`
+const ButtonStart = styled.div`
 	position: absolute;
-	font-family: 'Astonia', sans-serif;
-	font-size: 1.5em;
+	font-family: 'sincopaElla', sans-serif;
 	padding: 10px;
+	height: 30vh;
+	width: 30vw;
 	border-radius: 5px;
-	background-color: #ffffff;
-	color: #000000;
+	cursor: pointer;
+	top: 40vh;
+	left: 50vw;
+	transform: translate(-50%, -50%);
+	
+`;
+
+const ButtonReturn = styled.div`
+	position: absolute;
+	font-family: 'sincopa', sans-serif;
+	height: 40px;
+	width: 90px;
+	font-size: 1.5em;
+	border-radius: 5px;
+	color: #ffffff;
+	cursor: pointer;
+	top: 40px;
+	left: 20px;
+	/* left: 10vw; */
+	transform: translateY(-50%);
+
+	&:hover {
+		color: #c6a283;
+	}
+	
 `;
 
 const ButtonContainerAnimated = styled(ButtonContainer) <{ $isVisible: boolean }>`
@@ -25,10 +49,11 @@ const ButtonContainerAnimated = styled(ButtonContainer) <{ $isVisible: boolean }
 `;
 
 const ButtonInterface = () => {
-	const { resetExperience, state, startExperience, setExperienceStarted } = useInterfaceStore.getState();
+	const { resetExperience, state, startExperience, setExperienceStarted, canStart } = useInterfaceStore.getState();
 	const { cameraRef, CharRef: Char, AnimalRef: Animal, EnvRef: Env } = useMeshState().meshRefs; // Valide ici
 	const { play, reset } = useMusicPlayerz();
 
+	const retour:string = "< Retour";
 	const handleInitialChangeState = () => {
 		console.log('handleInitialChangeState');
 		setExperienceStarted(true);
@@ -43,8 +68,7 @@ const ButtonInterface = () => {
 		<>
 			{state === 'base' ?
 				<>
-					<ButtonStart style={{ fontFamily: 'Astonia', fontSize: '1.5em', padding: '10px', borderRadius: '5px', backgroundColor: '#ffffff', color: '#000000' }}
-						onClick={handleInitialChangeState}>GO</ButtonStart>
+					{canStart && <ButtonStart onClick={handleInitialChangeState} />}
 					<ButtonContainerAnimated $direction="up" $isVisible={false}>
 						<ChangeSceneButton direction="up" />
 					</ButtonContainerAnimated>
@@ -54,7 +78,7 @@ const ButtonInterface = () => {
 				</>
 				:
 				<>
-					<ButtonStart style={{ fontFamily: 'Astonia', fontSize: '1.5em', padding: '10px', borderRadius: '5px', backgroundColor: '#ffffff', color: '#000000' }} onClick={handleResetChangeState}>Retour</ButtonStart>
+					<ButtonReturn onClick={handleResetChangeState}>{retour}</ButtonReturn>
 					<ButtonContainerAnimated $direction="up" $isVisible={true}>
 						<ChangeSceneButton direction="up" />
 					</ButtonContainerAnimated>

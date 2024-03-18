@@ -14,7 +14,7 @@ function Scene3D() {
 			style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1, backgroundColor: '#282828' }}>
 			<Environment files="/public/hdri/gradient_min_19.hdr" />
 			<Experience />
-			<ambientLight intensity={5} />
+			<ambientLight intensity={3} />
 			<PostProcessing />
 			{/* <OrbitControls /> */}
 		</Canvas >

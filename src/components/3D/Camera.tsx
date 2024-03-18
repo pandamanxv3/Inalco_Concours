@@ -1,4 +1,4 @@
-import { useFrame, useThree } from "@react-three/fiber";
+import {  useThree } from "@react-three/fiber";
 import { useEffect } from "react";
 import { PerspectiveCamera as ThreePerspectiveCamera } from 'three';
 import { useMeshState } from "../../store/ContextBoard";
@@ -28,6 +28,7 @@ function Camera() {
 		perspectiveCamera.zoom = zoomAdjustment;
 		perspectiveCamera.fov = calculateFov(aspectRatio);
 		perspectiveCamera.updateProjectionMatrix();
+		
 	}, [camera, size.width, size.height]);
 
 	return (

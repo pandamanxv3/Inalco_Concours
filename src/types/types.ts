@@ -37,4 +37,3 @@ export interface StateConfig {
 	title: string;
   };
   
-  export type TextsConfig = TextConfig[];

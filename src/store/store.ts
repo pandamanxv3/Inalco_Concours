@@ -16,15 +16,18 @@ type InterfaceState = {
 	experienceStarted: boolean;
 	startExperience: (CameraRef: PerspectiveCamera, Env: Group, Char: Group, Animal: Group, play: (number: number) => void, reset: () => void) => void;
 	resetExperience: (environment: Group, character: Group, animal: Group, reset: () => void) => void;
+	reset:boolean;
 	setExperienceStarted: (newExperienceStarted: boolean) => void;
 	timer: number;
 	updateTimer: (elapsedTime: number) => void;
 	language: StateName;
 	setLanguage: (newLanguage: StateName) => void;
-
+	canStart: boolean;
+	setCanStart: (newCanStart: boolean) => void;
+	
 	rotationY: number;
 	setRotationY: (newRotationY: number) => void;
-
+	
 	animation: gsap.core.Tween | null;
 	triggerCameraRotation: (camera: PerspectiveCamera) => void;
 	screenChangeAnimation: (ScreenRef: Mesh) => void;
@@ -56,7 +59,7 @@ const useInterfaceStore = create<InterfaceState>((set) => ({
 		set({ experienceStarted: newExperienceStarted });
 	},
 	startExperience: (CameraRef: PerspectiveCamera, Env: Group, Char: Group, Animal: Group, play: (number: number) => void, reset: () => void) => {
-		const { setState, setStateAwait, triggerCameraRotation, popAnimation, resetExperience } = useInterfaceStore.getState();
+		const { setState, triggerCameraRotation, popAnimation, resetExperience } = useInterfaceStore.getState();
 		const { maxZEnv, totalTimeAnimation } = initialConfig;
 
 		// const todoBefore = () => {
@@ -90,6 +93,7 @@ const useInterfaceStore = create<InterfaceState>((set) => ({
 
 		// setStateAwait('FR', todoBefore, toDoAfter);
 		set({ experienceStarted: true });
+		set({ reset: false });
 
 		setState('FR', [
 			() => triggerCameraRotation(CameraRef!),
@@ -103,12 +107,14 @@ const useInterfaceStore = create<InterfaceState>((set) => ({
 		const animation = gsap.to(Env.position, {
 			duration: totalTimeAnimation,
 			z: maxZEnv,
+			ease: "linear",
 			onComplete: () => {
 				resetExperience(Env, Char, Animal, reset);
 			},
 		});
 		set({ animation: animation });
 	},
+	reset: false,
 	resetExperience: (Env: Group, Character: Group, Animal: Group, reset: () => void) => {
 		const { initialEnvPosition } = initialConfig;
 		const { setStateAwait, popOutAnimation, animation } = useInterfaceStore.getState();
@@ -126,6 +132,12 @@ const useInterfaceStore = create<InterfaceState>((set) => ({
 					Env.position.set(initialEnvPosition[0], initialEnvPosition[1], initialEnvPosition[2]);
 				}
 			});
+			set({ reset: true });
+
+	},
+	canStart: false,
+	setCanStart: (newCanStart: boolean) => {
+		set({ canStart: newCanStart });
 	},
 
 	timer: 0,
