@@ -12,7 +12,7 @@ function BackgroundColorAnimator() {
 		base: '#282828',
 		KR: '#483e4e', // Exemple de couleur, ajustez selon vos besoins
 		FR: '#475159',
-		DZ: '#a4896dc7',
+		DZ: '#6b4339',
 	};
 
 	useSpring({
