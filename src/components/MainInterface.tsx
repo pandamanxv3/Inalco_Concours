@@ -33,6 +33,7 @@ const MainContainer = styled.div<MainContainerProps>`
 	text-align: left; 
 	pointer-events: none;
 	animation: ${({ $state }) => $state === 'base' ? fadeOutAnimation : fadeInAnimation} 1s forwards;
+	
 `;
 
 const MainTitle = styled.h1`
@@ -50,6 +51,11 @@ const MainTitle = styled.h1`
 
 	}
 
+	@media (max-width: 600px) {
+		transform: translateY(320%);
+		font-size: 4.6vw ;
+	}
+
 `;
 
 const TextContainer = styled.div`
@@ -60,9 +66,12 @@ const TextContainer = styled.div`
 	line-height: 1.1;
 	font-size: min(calc(6px + 0.7vw), 20px); 
 	z-index: 80;
-	@media (max-height: 700px) {
+	@media (max-height: 750px) {
 		font-size: min(calc(6px + 0.5vw), 15px); 
 
+	}
+	@media (max-width: 600px) {
+		font-size: 3.2vw ;
 	}
 `;
 
@@ -72,6 +81,7 @@ const TextDiv = styled.div`
 	text-align: justify; 
 	color: #ffffff;
 	border-radius: 5px; 
+	
 `;
 
 const TextDivFinal = styled.div`
@@ -82,6 +92,11 @@ const TextDivFinal = styled.div`
 	color: #c6a283;
 	border-radius: 5px; 
 	text-align: center;
+	@media (max-width: 600px) {
+		font-size: 3.2vw ;
+		margin-top: -10px;
+		padding-top: 5px;
+	}
 `;
 
 const InstructionContainer = styled.div`

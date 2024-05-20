@@ -11,7 +11,7 @@ type InterfaceState = {
 	state: StateName;
 	setState: (newState: StateName, onBefore?: BeforeAfterAction | BeforeAfterAction[], onAfter?: () => void) => void;
 	setStateAwait: (newState: StateName, onBefore?: () => Promise<void>, onAfter?: () => void) => void;
-
+	
 	endAnimationIntro: boolean;
 	experienceStarted: boolean;
 	startExperience: (CameraRef: PerspectiveCamera, Env: Group, Char: Group, Animal: Group, play: (number: number) => void, reset: () => void) => void;
@@ -38,11 +38,18 @@ type InterfaceState = {
 const useInterfaceStore = create<InterfaceState>((set) => ({
 	/* State */
 	state: 'base',
+
 	setStateAwait: async (newState, onBefore = async () => { }, onAfter = () => { }) => {
 		await onBefore();
 		set({ state: newState });
 		onAfter();
 	},
+
+
+
+
+
+
 	setState: (newState, onBefore = () => { }, onAfter = () => { }) => {
 		const beforeActions = Array.isArray(onBefore) ? onBefore : [onBefore];
 		beforeActions.forEach((action) => {
@@ -167,6 +174,11 @@ const useInterfaceStore = create<InterfaceState>((set) => ({
 		animal.position.set(targetAnimalPos[0], targetAnimalPos[1], -70);
 
 		character.position.z = -25;
+		let charPos;
+		if (window.innerWidth < 768) 
+			charPos = 20;
+		else
+			charPos = 0;
 		gsap.to(animal.position, {
 			x: targetAnimalPos[0],
 			y: targetAnimalPos[1],
@@ -174,7 +186,7 @@ const useInterfaceStore = create<InterfaceState>((set) => ({
 			duration: 3,
 		});
 		gsap.to(character.position, {
-			z: 0,
+			z: charPos,
 			duration: 2,
 
 		});

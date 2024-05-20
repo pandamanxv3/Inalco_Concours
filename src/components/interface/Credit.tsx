@@ -55,6 +55,14 @@ const OpenButton = styled.div`
   font-size:min(1.5vw, 1.2em);
   cursor: pointer;
 
+  @media (max-width: 600px) {
+		font-size: 3.2vw ;
+		right: 0px;
+		bottom: 5px;
+		padding: 5px 10px;
+  
+	}
+
   &:hover {
 	color: #c6a283;
   }
@@ -71,6 +79,9 @@ const Title = styled.div`
 	top: 10px;
   color: #ffffff;
   border-radius: 5px;
+  @media (max-width: 600px) {
+		font-size: 4.2vw ;
+	}
 `;
 
 const Title2 = styled.div`
@@ -82,6 +93,9 @@ const Title2 = styled.div`
 	color: #c6a283;
 	border-radius: 5px; 
 	text-align: center;
+	@media (max-width: 600px) {
+		font-size: 3.2vw ;
+	}
 `;
 
 const CollaborateurName = styled.p`
@@ -91,6 +105,9 @@ const CollaborateurName = styled.p`
 	color: #ffffff;
 	border-radius: 5px; 
 	text-align: center;
+	@media (max-width: 600px) {
+		font-size: 4.2vw ;
+	}
 `;
 
 const ImgContainer = styled.div`
@@ -98,30 +115,28 @@ const ImgContainer = styled.div`
   justify-content: center;
   flex-direction: row;	
   align-items: center;
-  margin-top: 20px;
-	gap: 20px;
   @media (max-height: 600px) {
 	margin-top: 5px;
 	
-
   }
 `;
 const ImgConcours = styled.img`
-  width: 25%;
-  height: 25%;
+  width: 180px;
+  height: 180px;
 
   @media (max-width: 600px) {
-	width: 20%;
-	height:  20%;
+	width: 160px;
+	height:  160px;
   }
   @media (max-height: 600px) {
-	width: 20%;
-	height:  20%;
+	width: 160px;
+	height:  160px;
   }
 `;
 const Img42 = styled.img`
   width: 100px;
   height: 100px;
+  transform: translate(-20px, -10px);
   @media (max-width: 600px) {
 	width: 80px;
 	height:  80px;
@@ -149,11 +164,11 @@ const Credit: React.FC<CreditProps> = ({ isVisible, onClose }) => {
 				<Content>
 					<Title2>Collaborateur</Title2>
 					<CollaborateurName>Voix française - Ilona</CollaborateurName>
-					<CollaborateurName>Voix coréenne - Yunjin</CollaborateurName>
+					<CollaborateurName>Voix coréenne - Hyunjin</CollaborateurName>
 					<CollaborateurName>Voix arabe - Amina</CollaborateurName>
 					<CollaborateurName>Dessin de couverture - Colombe</CollaborateurName>
 					<ImgContainer>
-						<ImgConcours src="/img/concoursIcon.svg" alt="concours" />
+						<ImgConcours src="/img/concoursIcon.webp" alt="concours" />
 						<Img42 src="/img/42Icon.png" alt="logo" />
 					</ImgContainer>
 				</Content>

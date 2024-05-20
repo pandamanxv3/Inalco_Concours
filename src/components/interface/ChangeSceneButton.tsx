@@ -54,7 +54,12 @@ export const ButtonContainer = styled.div<DirectionProps>`
   transform: translateX(-50%);
   width: 80px;
   height: 60px;
-  ${props => props.$direction === 'up' ? 'top: 20px;' : 'bottom: 40px;'}
+  ${props => props.$direction === 'up' ? 'top: 20px;' : 'bottom: 20px;'}
+  @media (min-height: 1600px) {
+	${props => props.$direction === 'up' ? 'top: 20px;' : 'bottom: 70px;'}
+	  }
+
+
 `;
 
 interface ButtonWithIconProps {
@@ -69,6 +74,10 @@ const ButtonWithIcon = styled.button<ButtonWithIconProps>`
   height: 60px;
   border: none;
   cursor: pointer;
+  @media (min-height: 1600px) {
+	width: 120px;
+	height: 90px;
+  }
 `;
 
 const Button = styled(ButtonWithIcon)`

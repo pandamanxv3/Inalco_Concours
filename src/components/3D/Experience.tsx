@@ -15,9 +15,6 @@ function Experience() {
 			<Model />
 			<Screen />
 			<Animation />
-			{/* <Plane position={[0, -1, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={[300, 1000, 1]} receiveShadow  >
-				<meshStandardMaterial attach="material" color="#658072" />
-			</Plane> */}
 		</>
 	);
 }
